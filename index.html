@@ -78,7 +78,7 @@
     </div>
   </div>
   
-  <p class="center-align">Taichi Sakaguchi, <a href="https://scholar.google.com/citations?hl=en&user=jtB7J0AAAAAJ" target=“_blank” rel=“noopener noreferrer”>Akira Taniguchi</a>, <a href="https://scholar.google.com/citations?hl=en&user=Y4qjYvMAAAAJ" target=“_blank” rel=“noopener noreferrer”>Yoshinobu Hagiwara</a>, <a href="https://scholar.google.co.jp/citations?user=tsm7qaQAAAAJ&hl" target=“_blank” rel=“noopener noreferrer”>Lotfi El Hafi</a>, <a href="https://scholar.google.co.jp/citations?user=tsm7qaQAAAAJ&hl" target=“_blank” rel=“noopener noreferrer”>Shoichi Hasegawa</a>, <a href="https://scholar.google.com/citations?hl=en&user=dPOCLQEAAAAJ" target=“_blank” rel=“noopener noreferrer”>Tadahiro Taniguchi</a></p>
+  <p class="center-align">Taichi Sakaguchi, <a href="https://scholar.google.com/citations?hl=en&user=jtB7J0AAAAAJ" target=“_blank” rel=“noopener noreferrer”>Akira Taniguchi</a>, <a href="https://scholar.google.com/citations?hl=en&user=Y4qjYvMAAAAJ" target=“_blank” rel=“noopener noreferrer”>Yoshinobu Hagiwara</a>, <a href="https://scholar.google.co.jp/citations?user=tsm7qaQAAAAJ&hl" target=“_blank” rel=“noopener noreferrer”>Lotfi El Hafi</a>, <a href="https://scholar.google.co.jp/citations?user=KPxSCJUAAAAJ&hl" target=“_blank” rel=“noopener noreferrer”>Shoichi Hasegawa</a>, <a href="https://scholar.google.com/citations?hl=en&user=dPOCLQEAAAAJ" target=“_blank” rel=“noopener noreferrer”>Tadahiro Taniguchi</a></p>
   
   <div class="github-link">
     <a href="" target=“_blank” rel=“noopener noreferrer”>Github</a>
@@ -96,7 +96,13 @@
   
   <h2 class="fixed-width">Abstract</h2>
   <p class="center-align fixed-width text-justify">
-    Active semantic mapping is essential for service robots to quickly capture both the environment’s map and its spatial meaning, while also minimizing users’ burdens during robot operation and data collection. SpCoSLAM, which is a semantic mapping with place categorization and simultaneous localization and mapping (SLAM), offers the advantage of not being limited to predefined labels, making it well-suited for environmental adaptation. However, SpCoSLAM presents two issues that increase users’ burdens: 1) users struggle to efficiently determine a destination for the robot’s quick adaptation, and 2) providing instructions to the robot becomes repetitive and cumbersome. To address these challenges, we propose Active-SpCoSLAM, which enables the robot to actively explore uncharted areas while employing CLIP as image captioning to provide a flexible vocabulary that replaces human instructions. The robot determines its actions by calculating information gain integrated from both semantics and SLAM uncertainties.
+    Robots that assist in daily life are required to locate specific instances of objects that match the user's desired object in the environment.
+    This task is known as Instance-Specific Image Goal Navigation (InstanceImageNav), which requires a model capable of distinguishing between different instances within the same class. 
+    One significant challenge in robotics is that when a robot observes the same object from various three-dimensional viewpoints, its appearance may differ greatly, making it difficult to recognize and locate the object accurately.
+    In this study, we introduce a method that leverages multi-view images based on a 3D semantic map of the environment and self-supervised learning by SimSiam to train an instance identification model on-site. 
+    The effectiveness of our approach is validated using a photorealistic simulator, Habitat Matterport 3D, created by scanning real home environments.
+    Our results demonstrate a 1.7-fold improvement in task accuracy compared to CLIP, which is pre-trained multimodal contrastive learning for object search.
+    This improvement highlights the benefits of our proposed fine-tuning method in enhancing the performance of assistive robots in InstanceImageNav tasks.
   </p>
 
   <div class="image-container">
