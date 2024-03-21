@@ -99,7 +99,7 @@
     Robots that assist in daily life are required to locate specific instances of objects that match the user's desired object in the environment.
     This task is known as Instance-Specific Image Goal Navigation (InstanceImageNav), which requires a model capable of distinguishing between different instances within the same class. 
     One significant challenge in robotics is that when a robot observes the same object from various 3D viewpoints, its appearance may differ greatly, making it difficult to recognize and locate the object accurately.
-    In this study, we introduce a method, SimView, that leverages multi-view images based on a 3D semantic map of the environment and self-supervised learning by SimSiam to train an instance identification model on-site. 
+    In this study, we introduce a method, <b>SimView</b>, that leverages multi-view images based on a 3D semantic map of the environment and self-supervised learning by SimSiam to train an instance identification model on-site. 
     The effectiveness of our approach is validated using a photorealistic simulator, Habitat Matterport 3D, created by scanning real home environments.
     Our results demonstrate a 1.7-fold improvement in task accuracy compared to CLIP, which is pre-trained multimodal contrastive learning for object search.
     This improvement highlights the benefits of our proposed fine-tuning method in enhancing the performance of assistive robots in InstanceImageNav tasks.  </p>
@@ -117,18 +117,35 @@
 
   <h2 class="fixed-width">Registration Module</h2>
   <p class="center-align fixed-width text-justify">
-    First, the robot acquires multiple images of its surroundings with the head camera. Then, the images are input to ClipCap for caption generation, and the images are input to CNN to obtain image features. The robot learns location concepts by categorizing these, plus self-position, into three multimodal pieces of information.
-  </p>
+    We set up exploration points at the same intervals in the free space on a 2D map, and the robot explores the environment by visiting these exploration points. 
+    While the robot explores the environment, 2D mask images are generated using ray-tracing with the segmented 3D map and camera pose.
+    Generating mask images from the 3D map allows the same object to be associated across different frames. 
+    The observed mask images are converted into Bounding Boxes (BBoxes), and the robot extracts the BBoxes regions from the observed RGB images to observe the objects. 
+    When extracting the BBoxes of each object from the RGB image, it is adjusted to match the longer side of the BBox. 
+    In addition, areas outside the original RGB image are interpolated with only black.
+    The images of observed objects are pre-processed and fed into a pre-trained encoder to convert them into feature vectors.
+    Additionally, when the same object is observed multiple times in the environment, the observed feature vectors for each object are recorded as a single set.  </p>
 
   <h2 class="fixed-width">Self-Supervised Fine-tuning Module</h2>
   <p class="center-align fixed-width text-justify">
-    First, the robot acquires multiple images of its surroundings with the head camera. Then, the images are input to ClipCap for caption generation, and the images are input to CNN to obtain image features. The robot learns location concepts by categorizing these, plus self-position, into three multimodal pieces of information.
-  </p>
+    This module fine-tuned the image encoder, which was pre-trained by contrastive learning using self-supervised learning, object images observed by the robot while exploring the environment, and their pseudo-labels.
+    When a robot explores the environment and observes objects, images of the same instance include images observed from various angles of view.
+    In a preliminary experiment, we confirmed that when fine-tuning a pre-trained model using only contrastive learning on such a dataset, the accuracy of discrimination between instances is worse than that of the trained model.
+    Therefore, we propose a method to train a linear classifier simultaneously with contrastive learning. 
+    We use object instance ID \( y_true \) obtained from a 3D semantic map of the robot's environment as pseudo labels.
+    In addition, the contrastive learning method using negative pairs is recommended to be trained with a very large batch size and requires a large amount of data for learning.
+    Then, to conduct fine-tuning, it is necessary to continue exploring the environment for a long time and collecting images of objects.
+    Therefore, we use SimSiam for fine-tuning, which allows learning even with a small batch size.  </p>
 
   <h2 class="fixed-width">Retrieval Module</h2>
   <p class="center-align fixed-width text-justify">
-    First, the robot acquires multiple images of its surroundings with the head camera. Then, the images are input to ClipCap for caption generation, and the images are input to CNN to obtain image features. The robot learns location concepts by categorizing these, plus self-position, into three multimodal pieces of information.
-  </p>
+  The given query image \(I_q\) is input into a pre-trained encoder, resulting in a feature vector denoted as \(\bm{q}\).
+  Furthermore, we represent the observed feature vectors with instance ID \(i\) as a set \(\bm{Z}_i = \{\bm{z}_{i,n}\}_{n=1}^{N_i}\).
+  The cosine similarity between the query image \(\bm{q}\) and observed feature vectors \(\bm{Z}_i\) is calculated as \(\text{CosSim}(\bm{z}_{i, n}, \bm{q}) = \frac{\bm{z}_{i, n} \cdot \bm{q}}{\|\bm{z}_{i, n}\| \|\bm{q}\|}\) for each set of feature vectors corresponding to each instance ID.
+  From multiple similarities, the maximum value \(m_i\) is selected. Since it is known that an image encoder trained by contrastive learning embeds the image on the surface of a spherical space.
+  Finally, the instance ID \(J_{\text{target}}\) with the highest similarity among the set of maximum similarities \(\{m_{j}\}_{j=1}^J\) for each instance is obtained.
+  The target object's position is obtained using the instance ID \(J_{\text{target}}\) from the search results and the 3D semantic map.
+  The robot could navigate to the target position using the map.  </p>
 
 <div class="col-md-8">
   <h2 class="text-center">Citation</h2>
