@@ -98,18 +98,19 @@
   <p class="center-align fixed-width text-justify">
     Robots that assist in daily life are required to locate specific instances of objects that match the user's desired object in the environment.
     This task is known as Instance-Specific Image Goal Navigation (InstanceImageNav), which requires a model capable of distinguishing between different instances within the same class. 
-    One significant challenge in robotics is that when a robot observes the same object from various three-dimensional viewpoints, its appearance may differ greatly, making it difficult to recognize and locate the object accurately.
-    In this study, we introduce a method that leverages multi-view images based on a 3D semantic map of the environment and self-supervised learning by SimSiam to train an instance identification model on-site. 
+    One significant challenge in robotics is that when a robot observes the same object from various 3D viewpoints, its appearance may differ greatly, making it difficult to recognize and locate the object accurately.
+    In this study, we introduce a method, SimView, that leverages multi-view images based on a 3D semantic map of the environment and self-supervised learning by SimSiam to train an instance identification model on-site. 
     The effectiveness of our approach is validated using a photorealistic simulator, Habitat Matterport 3D, created by scanning real home environments.
     Our results demonstrate a 1.7-fold improvement in task accuracy compared to CLIP, which is pre-trained multimodal contrastive learning for object search.
-    This improvement highlights the benefits of our proposed fine-tuning method in enhancing the performance of assistive robots in InstanceImageNav tasks.
-  </p>
+    This improvement highlights the benefits of our proposed fine-tuning method in enhancing the performance of assistive robots in InstanceImageNav tasks.  </p>
 
 
   <h2 class="fixed-width">Approach</h2>
   <p class="center-align fixed-width text-justify">
-    The robot navigates to the position with the maximum information gain (IG) among the candidate points. The IG in Active-SpCoSLAM consists of a weighted sum of three IGs. IGs in Active-SpCoSLAM consist of a weighted sum of three IGs: IGs related to spatial concepts, IGs related to self-location, and IGs related to maps, respectively.
-  </p>
+    In the proposed system, a robot explores the environment, identifies the instance identical to a given query image from among the collected object images, and uses a 3D semantic map of the environment to locate the target object's position. 
+    In addition, we propose a method, <b>Semantic Instance Multi-view Contrastive Fine-tuning (SimView)</b>, for fine-tuning pre-trained models using a self-supervised learning framework to improve task accuracy in the environment.
+    Figure 1 shows the diagram of our proposed system.  </p>
+  
   <div class="image-container">
     <img src="./images/habitat_approach.svg">
   </div>
