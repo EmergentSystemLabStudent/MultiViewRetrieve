@@ -134,7 +134,7 @@
     When a robot explores the environment and observes objects, images of the same instance include images observed from various angles of view.
     In a preliminary experiment, we confirmed that when fine-tuning a pre-trained model using only contrastive learning on such a dataset, the accuracy of discrimination between instances is worse than that of the trained model.
     Therefore, we propose a method to train a linear classifier simultaneously with contrastive learning. 
-    We use object instance ID \( y_true \) obtained from a 3D semantic map of the robot's environment as pseudo labels.
+    We use object instance ID \( y_{true} \) obtained from a 3D semantic map of the robot's environment as pseudo labels.
     In addition, the contrastive learning method using negative pairs is recommended to be trained with a very large batch size and requires a large amount of data for learning.
     Then, to conduct fine-tuning, it is necessary to continue exploring the environment for a long time and collecting images of objects.
     Therefore, we use SimSiam for fine-tuning, which allows learning even with a small batch size.  </p>
