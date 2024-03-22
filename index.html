@@ -132,20 +132,20 @@
     When a robot explores the environment and observes objects, images of the same instance include images observed from various angles of view.
     In a preliminary experiment, we confirmed that when fine-tuning a pre-trained model using only contrastive learning on such a dataset, the accuracy of discrimination between instances is worse than that of the trained model.
     Therefore, we propose a method to train a linear classifier simultaneously with contrastive learning. 
-    We use object instance ID /( y_true /) obtained from a 3D semantic map of the robot's environment as pseudo labels.
+    We use object instance ID \( y_true \) obtained from a 3D semantic map of the robot's environment as pseudo labels.
     In addition, the contrastive learning method using negative pairs is recommended to be trained with a very large batch size and requires a large amount of data for learning.
     Then, to conduct fine-tuning, it is necessary to continue exploring the environment for a long time and collecting images of objects.
     Therefore, we use SimSiam for fine-tuning, which allows learning even with a small batch size.  </p>
 
   <h2 class="fixed-width">Retrieval Module</h2>
   <p class="center-align fixed-width text-justify">
-  The given query image /(I_q/) is input into a pre-trained encoder, resulting in a feature vector denoted as \(\bm{q}\).
-  Furthermore, we represent the observed feature vectors with instance ID /(i/) as a set \(\bm{Z}_i = \{\bm{z}_{i,n}\}_{n=1}^{N_i}\).
+  The given query image \(I_q\) is input into a pre-trained encoder, resulting in a feature vector denoted as \(\bm{q}\).
+  Furthermore, we represent the observed feature vectors with instance ID \(i\) as a set \(\bm{Z}_i = \{\bm{z}_{i,n}\}_{n=1}^{N_i}\).
   The cosine similarity between the query image \(\bm{q}\) and observed feature vectors \(\bm{Z}_i\) is calculated as \(\text{CosSim}(\bm{z}_{i, n}, \bm{q}) = \frac{\bm{z}_{i, n} \cdot \bm{q}}{\|\bm{z}_{i, n}\| \|\bm{q}\|}\) for each set of feature vectors corresponding to each instance ID.
-  From multiple similarities, the maximum value \(m_i\) is selected. Since it is known that an image encoder trained by contrastive learning embeds the image on the surface of a spherical space.
+  From multiple similarities, the maximum value \(m_i\) is selected.
   Finally, the instance ID \(J_{\text{target}}\) with the highest similarity among the set of maximum similarities \(\{m_{j}\}_{j=1}^J\) for each instance is obtained.
   The target object's position is obtained using the instance ID \(J_{\text{target}}\) from the search results and the 3D semantic map.
-  The robot could navigate to the target position using the map.  </p>
+  The robot could navigate to the target position using the map.</p>
 
 <div class="col-md-8">
   <h2 class="text-center">Citation</h2>
