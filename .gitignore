@@ -1,0 +1,16 @@
+checkpoint/
+logs/
+weight/
+__pycache__/
+dataset/
+
+# dev completed
+partial_fine_tuning.py
+full_fine_tuning.py
+unsupervised_partial_fine_tuning.py
+unsupervised_full_fine_tuning.py
+full_fine_tuning_eval.py
+partial_fine_tuning_eval.py
+unsupervised_full_fine_tuning_eval.py
+unsupervised_partial_fine_tuning_eval.py
+imagenet_pretrain_eval.py
